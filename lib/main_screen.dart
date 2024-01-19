@@ -13,8 +13,6 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
-
-
   List<Internship> internships = [];
 
   @override
@@ -30,7 +28,8 @@ class _MainScreenState extends State<MainScreen> {
 
     if (response.statusCode == 200) {
       final Map<String, dynamic> jsonData = json.decode(response.body);
-      final List<int> internshipIds = List<int>.from(jsonData['internship_ids']);
+      final List<int> internshipIds =
+          List<int>.from(jsonData['internship_ids']);
 
       final List<Internship> fetchedInternships = internshipIds.map((id) {
         return Internship.fromJson(jsonData['internships_meta'][id.toString()]);
@@ -47,29 +46,146 @@ class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title:Text("Api Internship"),
+      drawer: const Drawer(
+        backgroundColor: Colors.white60,
       ),
-
+      appBar: AppBar(
+        title: const Text(
+          'InternShala Hiring...',
+          style: TextStyle(
+            fontSize: 19,
+            fontStyle: FontStyle.normal,
+            fontWeight: FontWeight.w700,
+          ),
+        ),
+      ),
       body: ListView.builder(
         itemCount: internships.length,
         itemBuilder: (context, index) {
           final internship = internships[index];
-          return ListTile(
-            title: Text(internship.title),
-            subtitle: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text('Company: ${internship.company}'),
-                Text('Employement Type: ${internship.employmentType}'),
-                Text('Start Date: ${internship.startDate}'),
-                Text('Duration: ${internship.duration}'),
-                Text('Stipend: ${internship.stipend}'),
-                // Text('Posted: ${internship.postedOn}'),
-                Text('Posted: ${internship.postedByLabel}'),
-                Text('Locations: ${internship.locations.join(', ')}'),
-              ],
+          return Card(
+            color: Colors.grey[20],
+            child: ListTile(
+              title: Text(
+                internship.title,
+                style: TextStyle(fontSize: 19),
+              ),
+              subtitle: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    internship.company,
+                    style: TextStyle(
+                      color: Colors.grey[800],
+                    ),
+                  ),
+                  SizedBox(height: 10),
+                  Row(
+                    children: [
+                      Icon(
+                        Icons.fmd_good_outlined,
+                        size: 20,
+                      ),
+                      SizedBox(
+                        width: 5,
+                      ),
+                      Text(internship.locations.join(', ')),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 14,
+                  ),
+                  Row(
+                    children: [
+                      Row(
+                        children: [
+                          const Icon(
+                            Icons.play_circle_outline_sharp,
+                            size: 20,
+                          ),
+                          SizedBox(
+                            width: 5,
+                          ),
+                          Text(internship.startDate),
+                        ],
+                      ),
+                      SizedBox(
+                        width: 18,
+                      ),
+                      Row(
+                        children: [
+                          const Icon(
+                            Icons.calendar_month,
+                            size: 20,
+                          ),
+                          SizedBox(
+                            width: 5,
+                          ),
+                          Text(internship.duration),
+                        ],
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 14,
+                  ),
+                  Row(
+                    children: [
+                      const Icon(
+                        Icons.money,
+                        size: 20,
+                      ),
+                      SizedBox(
+                        width: 5,
+                      ),
+                      Text(internship.stipend),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 13,
+                  ),
+                  Card(
+                      color: Colors.amber[50],
+                      child: SizedBox(
+                          width: 85,
+                          child:
+                              Center(child: Text(internship.employmentType)))),
+                  SizedBox(
+                    height: 6,
+                  ),
+                  Card(
+                      color: Colors.amber[50],
+                      child: SizedBox(
+                          width: 85,
+                          child:
+                              Center(child: Text(internship.postedByLabel)))),
+                  Divider(
+                    height: 20,
+                    color: Colors.grey[600],
+                    thickness: 1,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      TextButton(
+                        onPressed: () {},
+                        child: Text(
+                          'View details',
+                          style: TextStyle(color: Colors.blueAccent[40]),
+                        ),
+                      ),
+                      TextButton(
+                        onPressed: () {},
+                        child: Text(
+                          'Apply now',
+                          style: TextStyle(color: Colors.blueAccent[40]),
+                        ),
+                      ),
+                    ],
+                  )
+                ],
+              ),
             ),
-            // Add other widgets or data you want to display.
           );
         },
       ),

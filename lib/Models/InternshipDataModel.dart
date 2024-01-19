@@ -7,9 +7,9 @@ class Internship {
   final String duration;
   final String stipend;
   final List<String> locations;
-  final String? postedOn;
-  final String? postedByLabel;
-  final String? ppoLabelValue;
+  final String postedOn;
+  final String postedByLabel;
+  final String ppoLabelValue;
 
   Internship({
     required this.id,
@@ -35,9 +35,9 @@ class Internship {
       duration: json['duration'],
       stipend: json['stipend']['salary'],
       locations: List<String>.from(json['location_names']),
-      postedOn : json['posted_on'],
-      postedByLabel : json['posted_by_label'],
-      ppoLabelValue : json['ppo_label_value'],
+      postedOn: json['posted_on'],
+      postedByLabel: json['posted_by_label'],
+      ppoLabelValue: json['ppo_label_value'],
     );
   }
 }
