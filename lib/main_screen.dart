@@ -26,11 +26,9 @@ class _MainScreenState extends State<MainScreen> {
   Future<void> fetchData() async {
     final response = await http.get(
       Uri.parse('https://internshala.com/flutter_hiring/search'),
-      // Add any headers or parameters needed for your API request.
     );
 
     if (response.statusCode == 200) {
-      // If the server returns a 200 OK response, parse the JSON
       final Map<String, dynamic> jsonData = json.decode(response.body);
       final List<int> internshipIds = List<int>.from(jsonData['internship_ids']);
 
@@ -42,31 +40,10 @@ class _MainScreenState extends State<MainScreen> {
         internships = fetchedInternships;
       });
     } else {
-      // If the server did not return a 200 OK response,
-      // throw an exception or handle the error as needed.
       throw Exception('Failed to load data');
     }
   }
 
-
-  //
-  // List<InternshipDataModel> internshipList = [];
-  // var arr = [65532,65531,65381,65524,65522,65517,65515,65454,65501,65504];
-  //
-  // Future<List<InternshipDataModel>> getPostApi () async{
-  //   final response = await http.get(Uri.parse('https://internshala.com/flutter_hiring/search'));
-  //   var data = jsonDecode(response.body.toString());
-  //   if(response.statusCode == 200){
-  //     for(Map i in data){
-  //       internshipList.add(InternshipDataModel.fromJson(data["internships_meta"][i]));
-  //     }
-  //     return internshipList;
-  //   }else{
-  //     print('data');
-  //     print(internshipList[0]);
-  //     return internshipList;
-  //   }
-  // }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -96,25 +73,6 @@ class _MainScreenState extends State<MainScreen> {
           );
         },
       ),
-      // body: Column(
-      //    children: [
-      //      Expanded(
-      //        child: FutureBuilder(
-      //            future: getPostApi(),
-      //            builder: (context,snapshot){
-      //          if(!snapshot.hasData){
-      //            return const Text('Loading..');
-      //          }else{
-      //            return ListView.builder(
-      //                itemCount: internshipList.length,
-      //                itemBuilder: (context,index){
-      //              return Text(index.toString());
-      //            });
-      //          }
-      //        }),
-      //      )
-      //    ],
-      // ),
     );
   }
 }
